@@ -9,15 +9,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class File {
-	
+
 	//rewrites files with same name
 	//CHANGE: check if file already exists, make sure user wants to overwrite it
 	//saves array into file
-	public static void save(String saveName, String[] data) throws IOException{
+	public static void save(String userName, String[] data) throws IOException{
 		// have uhh file name to save to in
-		String fileName = ("C:\\Simulator\\" + saveName + ".txt");
+		String address = ("C:\\Simulator\\" + userName + ".txt");
 		// Create a BufferedWriter around a FileWriter.
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(address));
         // Write these lines to the file.
         // ... We call newLine to insert a newline character.
 
@@ -31,10 +31,10 @@ public class File {
 	}
 
 	//load contents of file into array
-	public static String[] load(String loadName) throws IOException{
-		String fileName = ("C:\\Simulator\\" + loadName + ".txt");
+	public static String[] load(String userName) throws IOException{
+		String address = ("C:\\Simulator\\" + userName + ".txt");
 
-		BufferedReader in = new BufferedReader(new FileReader(fileName));
+		BufferedReader in = new BufferedReader(new FileReader(address));
 		String str=null;
 		ArrayList<String> lines = new ArrayList<String>();
 		while((str = in.readLine()) != null){
@@ -62,8 +62,8 @@ public class File {
 	//adds corrupts file to directory when gone through bad ending
 	@SuppressWarnings("resource")
 	public static void makeCorrupt() throws IOException {
-		String fileName = ("C:\\Simulator\\corrupt.txt");
-		new FileWriter(fileName);
+		String address = ("C:\\Simulator\\corrupt.txt");
+		new FileWriter(address);
 	}
 
 	public static void main(String[] args) throws IOException{

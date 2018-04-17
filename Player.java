@@ -1,7 +1,7 @@
 public class Player {
 	String name, gender;
 	int prog;
-	String fileName;
+	String address;
 
 	// constructors
 	public Player() {
@@ -41,10 +41,10 @@ public class Player {
 	}
 
 	//file
-	public void setFile(String fileName){
-		this.fileName = fileName;
+	public void setAddress(String address){
+		this.address = address;
 	}
-	public String getFile(){
-		return fileName;
+	public String getAddress(){
+		return address;
 	}
 }
