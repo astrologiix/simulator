@@ -44,7 +44,6 @@ public class File {
 		return lines.toArray(new String[lines.size()]);
 	}
 
-	//creates folder to store save files in C drive,,, maybe change location later but this should be fine
 	//does not overwrite folder if it already exists
 	public static void createDir() throws IOException {
 		Files.createDirectories(Paths.get("C:\\Simulator"));
