@@ -1,5 +1,3 @@
-package juniorprog;
-
 public class Player {
 	String name, gender;
 	int prog;
