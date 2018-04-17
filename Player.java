@@ -1,6 +1,7 @@
 public class Player {
 	String name, gender;
 	int prog;
+	String fileName;
 
 	// constructors
 	public Player() {
@@ -19,7 +20,6 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -28,17 +28,23 @@ public class Player {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
 	public String getGender(){
 		return gender;
 	}
-	
+
 	//prog
 	public void setProgress(int prog){
 		this.prog = prog;
 	}
-	
 	public int getProgress(){
 		return prog;
+	}
+
+	//file
+	public void setFile(String fileName){
+		this.fileName = fileName;
+	}
+	public String getFile(){
+		return fileName;
 	}
 }
