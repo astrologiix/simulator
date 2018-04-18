@@ -14,7 +14,6 @@ public class Display {
 	static ImageIcon icon = new ImageIcon("C:\\Simulator\\icon.png");
 
 	public static void title() throws IOException {
-
         BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\bg.jpg"));
         panel.setLayout(null);
 
@@ -64,31 +63,39 @@ public class Display {
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfrm.getContentPane().setBackground(Color.BLACK);
 
+		//make pane to handle buttons, text field
 		JPanel pane = new JPanel();
 		pane.setBackground(Color.BLACK);
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
+		//label for game title
 		JLabel empty = new JLabel("GAME TITLE");
 		empty.setForeground(Color.WHITE);
 		empty.setFont(h1);
 		empty.setHorizontalAlignment(JLabel.CENTER);
 
+		//save game as label
 		JLabel lbl = new JLabel("SAVE GAME AS");
 		lbl.setFont(h2);
 		lbl.setForeground(Color.WHITE);
 
+		//save icon display
 		Icon icon = new ImageIcon("C:\\Simulator\\saveicon.jpg");
 		JLabel photo = new JLabel(icon);
 
+		//text field for file name specification
+		//CHANGE: display confirm dialog if filename already exits in folder
 		JTextField fileName = new JTextField(30);
 		fileName.setFont(h3);
 
+		//save button
 		JButton saveButton = new JButton("SAVE");
 		saveButton.setFont(h3);
 		saveButton.setBackground(Color.WHITE);
 		saveButton.setFocusable(false);
 
+		//positioning of field and button
 		c.gridx = 1;
 		c.gridy = 0;
 		pane.add(lbl, c);
