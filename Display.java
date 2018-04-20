@@ -176,43 +176,90 @@ public class Display {
 		jfrm.setVisible(true);
 	}
 
-	// unfinished, doens't work
-	public static void inGame() {
-
-		JPanel panel = new JPanel();
-		JPanel top = new JPanel();
-		top.setBounds(10, 10, 1370, 800);
-		top.setBackground(Color.white);
-		panel.setBackground(Color.black);
-		// BackgroundImg panel = new BackgroundImg("C:\\Simulator\\gamebg.png");
+	public static void inGame() throws IOException {
+		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
 		panel.setLayout(null);
 
-		JButton sButton = new JButton("save");
-		sButton.setBounds(0, 811, 80, 35);
-		sButton.setBackground(Color.WHITE);
-		sButton.setFocusable(false);
-		sButton.setFont(h3);
-		JButton lButton = new JButton("load");
-		sButton.setBounds(50, 809, 80, 35);
-		lButton.setBackground(Color.WHITE);
-		lButton.setFocusable(false);
-		lButton.setFont(h3);
-		JButton mButton = new JButton("menu");
-		sButton.setBounds(150, 809, 80, 35);
-		mButton.setBackground(Color.WHITE);
-		mButton.setFocusable(false);
-		mButton.setFont(h3);
-		JButton qButton = new JButton("quit");
-		sButton.setBounds(200, 809, 80, 35);
-		qButton.setBackground(Color.WHITE);
-		qButton.setFocusable(false);
-		qButton.setFont(h3);
+		JButton newGame, loadGame, quit;
+		newGame = new JButton("NEW");
+		newGame.setBounds(9, 812, 140, 35);
+		newGame.setBackground(Color.WHITE);
+		newGame.setFocusable(false);
+		newGame.setFont(h3);
+		loadGame = new JButton("LOAD");
+		loadGame.setBounds(169, 812, 140, 35);
+		loadGame.setBackground(Color.WHITE);
+		loadGame.setFocusable(false);
+		loadGame.setFont(h3);
+		quit = new JButton("QUIT");
+		quit.setBounds(329, 812, 140, 35);
+		quit.setBackground(Color.WHITE);
+		quit.setFocusable(false);
+		quit.setFont(h3);
 
-		panel.add(top);
-		panel.add(sButton);
-		panel.add(lButton);
-		panel.add(mButton);
-		panel.add(qButton);
+		panel.add(newGame);
+		panel.add(loadGame);
+		panel.add(quit);
+
+		jfrm.getContentPane().add(panel);
+
+		def();
+
+		jfrm.setVisible(true);
+	}
+
+	public static JButton responseButton(String text, int location) {
+		JButton button = new JButton(text);
+		switch(location) {
+		case 1:
+			button.setBounds(350, 270, 700, 35);
+			break;
+		case 2:
+			button.setBounds(350, 370, 700, 35);
+			break;
+		case 3:
+			button.setBounds(350, 470, 700, 35);
+			break;
+		}
+		button.setBackground(Color.WHITE);
+		button.setFocusable(false);
+		button.setFont(h3);
+
+		return button;
+	}
+
+	public static void response() throws IOException {
+		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
+		panel.setLayout(null);
+
+		JButton r1, r2, r3;
+		r1 = responseButton("help me", 1);
+		r2 = responseButton("im dying", 2);
+		r3 = responseButton("this is too much", 3);
+
+		JButton newGame, loadGame, quit;
+		newGame = new JButton("NEW");
+		newGame.setBounds(9, 812, 140, 35);
+		newGame.setBackground(Color.WHITE);
+		newGame.setFocusable(false);
+		newGame.setFont(h3);
+		loadGame = new JButton("LOAD");
+		loadGame.setBounds(169, 812, 140, 35);
+		loadGame.setBackground(Color.WHITE);
+		loadGame.setFocusable(false);
+		loadGame.setFont(h3);
+		quit = new JButton("QUIT");
+		quit.setBounds(329, 812, 140, 35);
+		quit.setBackground(Color.WHITE);
+		quit.setFocusable(false);
+		quit.setFont(h3);
+
+		panel.add(newGame);
+		panel.add(loadGame);
+		panel.add(quit);
+		panel.add(r1);
+		panel.add(r2);
+		panel.add(r3);
 
 		jfrm.getContentPane().add(panel);
 
@@ -229,6 +276,6 @@ public class Display {
 	}
 
 	public static void main(String[] args) throws IOException {
-		loadScreen();
+		response();
 	}
 }
