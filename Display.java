@@ -19,6 +19,7 @@ public class Display {
 
 	public static void def() {
 		jfrm.setIconImage(icon.getImage());
+		jfrm.setLayout(new BorderLayout());
 		jfrm.setSize(1400, 900);
 		jfrm.setResizable(false);
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,8 +29,8 @@ public class Display {
 		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\bg.jpg"));
 		panel.setLayout(null);
 
-		JLabel name = new JLabel("GAME TITLE");
-		name.setBounds(670, 30, 600, 200);
+		JLabel name = new JLabel("LUV MI");
+		name.setBounds(850, 30, 600, 200);
 		name.setFont(h1);
 		name.setForeground(Color.BLACK);
 
@@ -39,16 +40,33 @@ public class Display {
 		newGame.setBackground(Color.WHITE);
 		newGame.setFocusable(false);
 		newGame.setFont(h3);
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				newGame();
+			}
+		});
 		loadGame = new JButton("LOAD GAME");
 		loadGame.setBounds(70, 660, 250, 40);
 		loadGame.setBackground(Color.WHITE);
 		loadGame.setFocusable(false);
 		loadGame.setFont(h3);
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				loadScreen();
+			}
+		});
 		quit = new JButton("QUIT GAME");
 		quit.setBounds(70, 720, 250, 40);
 		quit.setBackground(Color.WHITE);
 		quit.setFocusable(false);
 		quit.setFont(h3);
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 
 		panel.add(newGame);
 		panel.add(loadGame);
@@ -75,7 +93,7 @@ public class Display {
 		GridBagConstraints c = new GridBagConstraints();
 
 		// label for game title
-		JLabel empty = new JLabel("GAME TITLE");
+		JLabel empty = new JLabel("LUV MI");
 		empty.setForeground(Color.WHITE);
 		empty.setFont(h1);
 		empty.setHorizontalAlignment(JLabel.CENTER);
@@ -112,6 +130,22 @@ public class Display {
 		c.gridx = 1;
 		c.gridy = 3;
 		pane.add(saveButton, c);
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FileHandler.save(fileName.getText(), data);
+				} catch (IOException e1) {
+					System.out.println("Save failed.");
+				}
+				clear();
+				try {
+					clear();
+					inGame();
+				} catch (IOException e1) {
+					System.out.println("Failed.");
+				}
+			}
+		});
 
 		jfrm.setLayout(new GridLayout(3, 1, 0, 0));
 		jfrm.add(empty);
@@ -134,7 +168,7 @@ public class Display {
 		GridBagConstraints c = new GridBagConstraints();
 
 		// label for game title
-		JLabel empty = new JLabel("GAME TITLE");
+		JLabel empty = new JLabel("LUV MI");
 		empty.setForeground(Color.WHITE);
 		empty.setFont(h1);
 		empty.setHorizontalAlignment(JLabel.CENTER);
@@ -154,10 +188,10 @@ public class Display {
 		fileName.setFont(h3);
 
 		// load button
-		JButton saveButton = new JButton("LOAD");
-		saveButton.setFont(h3);
-		saveButton.setBackground(Color.WHITE);
-		saveButton.setFocusable(false);
+		JButton loadButton = new JButton("LOAD");
+		loadButton.setFont(h3);
+		loadButton.setBackground(Color.WHITE);
+		loadButton.setFocusable(false);
 
 		// positioning of field and button
 		c.gridx = 1;
@@ -170,7 +204,16 @@ public class Display {
 		fileName.setPreferredSize(new Dimension(10, 30));
 		c.gridx = 1;
 		c.gridy = 3;
-		pane.add(saveButton, c);
+		pane.add(loadButton, c);
+		loadButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FileHandler.load(fileName.getText());
+				} catch (IOException e1) {
+					System.out.println("Load failed.");
+				}
+			}
+		});
 
 		jfrm.setLayout(new GridLayout(3, 1, 0, 0));
 		jfrm.add(empty);
@@ -270,6 +313,7 @@ public class Display {
 	}
 
 	public static void inGame() throws IOException {
+
 		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
 		panel.setLayout(null);
 
@@ -279,24 +323,42 @@ public class Display {
 		newGame.setBackground(Color.WHITE);
 		newGame.setFocusable(false);
 		newGame.setFont(h3);
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				newGame();
+			}
+		});
 		loadGame = new JButton("LOAD");
 		loadGame.setBounds(169, 815, 140, 35);
 		loadGame.setBackground(Color.WHITE);
 		loadGame.setFocusable(false);
 		loadGame.setFont(h3);
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				loadScreen();
+			}
+		});
 		quit = new JButton("QUIT");
 		quit.setBounds(329, 815, 140, 35);
 		quit.setBackground(Color.WHITE);
 		quit.setFocusable(false);
 		quit.setFont(h3);
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				System.exit(0);
+			}
+		});
 
 		panel.add(newGame);
 		panel.add(loadGame);
 		panel.add(quit);
 
-		jfrm.getContentPane().add(panel);
-
 		def();
+
+		jfrm.getContentPane().add(panel);
 
 		jfrm.setVisible(true);
 		jfrm.setSize(1400, 901);
@@ -323,6 +385,8 @@ public class Display {
 	}
 
 	public static void response() throws IOException {
+		def();
+
 		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
 		panel.setLayout(null);
 
@@ -382,12 +446,12 @@ public class Display {
 
 	// clear frame contents
 	public static void clear() {
+		jfrm.getContentPane().revalidate();
 		jfrm.getContentPane().removeAll();
 		jfrm.getContentPane().repaint();
-		jfrm.getContentPane().revalidate();
 	}
 
 	public static void main(String[] args) throws IOException {
-		newGame();
+		inGame();
 	}
 }
