@@ -13,6 +13,8 @@ public class Display {
 	static Font h2 = new Font("courier", Font.PLAIN, 40);
 	// button font
 	static Font h3 = new Font("courier", Font.PLAIN, 17);
+	//character name font
+	static Font h4 = new Font("courier", Font.PLAIN, 25);
 
 	static JFrame jfrm = new JFrame("Game Title");
 	static ImageIcon icon = new ImageIcon("C:\\Simulator\\icon.png");
@@ -140,7 +142,7 @@ public class Display {
 				clear();
 				try {
 					clear();
-					inGame();
+					title();
 				} catch (IOException e1) {
 					System.out.println("Failed.");
 				}
@@ -157,6 +159,8 @@ public class Display {
 
 	// display load game screen
 	public static void loadScreen() {
+		boolean loaded = false;
+
 		// make basic background and window
 		def();
 		jfrm.getContentPane().setBackground(Color.BLACK);
@@ -312,10 +316,45 @@ public class Display {
 		jfrm.setVisible(true);
 	}
 
-	public static void inGame() throws IOException {
+	public static void inGame(String background, String charimg, String charname, String line1, String line2, String line3) throws IOException {
+		JLayeredPane pane = new JLayeredPane();
+		pane.setPreferredSize(new Dimension(1400, 900));
+		//JPanel panel = new JPanel();
 
-		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
-		panel.setLayout(null);
+		JLabel textbg = new JLabel(new ImageIcon("C:\\Simulator\\textbg.png"));
+		JLabel bg = new JLabel(new ImageIcon("C:\\Simulator\\" + background));
+		JLabel chara = new JLabel(new ImageIcon("C:\\Simulator\\" + charimg));
+		JLabel frame = new JLabel(new ImageIcon("C:\\Simulator\\gamebgt.png"));
+		JLabel charaname = new JLabel(charname);
+		charaname.setFont(h4);
+		JLabel text1 = new JLabel(line1);
+		text1.setFont(h3);
+		JLabel text2 = new JLabel(line2);
+		text2.setFont(h3);
+		JLabel text3 = new JLabel(line3);
+		text3.setFont(h3);
+
+		pane.add(bg, 0);
+		bg.setBounds(0, 0, 1394, 866);
+		pane.add(chara, 1);
+		chara.setBounds(100, 50, 500, 600);
+		frame.setBounds(0, 0, 1394, 866);
+		textbg.setBounds(15, 500, 1356, 295);
+		pane.add(textbg, 2);
+		pane.add(frame, 2);
+		pane.add(charaname, 3);
+		charaname.setBounds(100, 519, 200, 50);
+		charaname.setForeground(Color.white);
+		pane.add(text1, 3);
+		text1.setBounds(70, 620, 1300, 20);
+		text1.setForeground(Color.white);
+		pane.add(text2, 3);
+		text2.setBounds(70, 650, 1300, 20);
+		text2.setForeground(Color.white);
+		pane.add(text3, 3);
+		text3.setBounds(70, 680, 1300, 20);
+		text3.setForeground(Color.white);
+		pane.setLayout(null);
 
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW");
@@ -352,16 +391,21 @@ public class Display {
 			}
 		});
 
-		panel.add(newGame);
-		panel.add(loadGame);
-		panel.add(quit);
+		pane.add(newGame, 3);
+		pane.add(loadGame, 3);
+		pane.add(quit, 3);
+		pane.moveToFront(newGame);
+		pane.moveToFront(loadGame);
+		pane.moveToFront(quit);
+		pane.moveToBack(chara);
+		pane.moveToBack(bg);
 
 		def();
 
-		jfrm.getContentPane().add(panel);
+		jfrm.getContentPane().add(pane);
 
 		jfrm.setVisible(true);
-		jfrm.setSize(1400, 901);
+		jfrm.setSize(1400, 900);
 	}
 
 	public static JButton responseButton(String text, int location) {
@@ -452,6 +496,6 @@ public class Display {
 	}
 
 	public static void main(String[] args) throws IOException {
-		inGame();
+		inGame("bg.jpg", "carl_happy.v1.png", "carl", "help", "", "");
 	}
 }
