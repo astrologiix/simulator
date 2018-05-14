@@ -13,12 +13,13 @@ public class Display {
 	static Font h2 = new Font("courier", Font.PLAIN, 40);
 	// button font
 	static Font h3 = new Font("courier", Font.PLAIN, 17);
-	//character name font
+	// character name font
 	static Font h4 = new Font("courier", Font.PLAIN, 25);
 
 	static JFrame jfrm = new JFrame("Game Title");
 	static ImageIcon icon = new ImageIcon("C:\\Simulator\\icon.png");
-
+	static ImageIcon title = new ImageIcon("C:\\Simulator\\title.png");
+	
 	public static void def() {
 		jfrm.setIconImage(icon.getImage());
 		jfrm.setLayout(new BorderLayout());
@@ -30,10 +31,10 @@ public class Display {
 	public static void title() throws IOException {
 		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\bg.jpg"));
 		panel.setLayout(null);
-
-		JLabel name = new JLabel("LUV MI");
-		name.setBounds(850, 30, 600, 200);
-		name.setFont(h1);
+		panel.setSize(1400, 900);
+		
+		JLabel name = new JLabel(title);
+		name.setBounds(820, 70, 500, 390);
 		name.setForeground(Color.BLACK);
 
 		JButton newGame, loadGame, quit;
@@ -287,9 +288,9 @@ public class Display {
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				data[1] = name.getText();
-				if(male.isSelected()) {
+				if (male.isSelected()) {
 					data[2] = "male";
-				}else if(female.isSelected()) {
+				} else if (female.isSelected()) {
 					data[2] = "female";
 				}
 				clear();
@@ -316,10 +317,11 @@ public class Display {
 		jfrm.setVisible(true);
 	}
 
-	public static void inGame(String background, String charimg, String charname, String line1, String line2, String line3) throws IOException {
+	public static void inGame(String background, String charimg, String charname, String line1, String line2,
+			String line3) throws IOException {
 		JLayeredPane pane = new JLayeredPane();
 		pane.setPreferredSize(new Dimension(1400, 900));
-		//JPanel panel = new JPanel();
+		// JPanel panel = new JPanel();
 
 		JLabel textbg = new JLabel(new ImageIcon("C:\\Simulator\\textbg.png"));
 		JLabel bg = new JLabel(new ImageIcon("C:\\Simulator\\" + background));
@@ -496,6 +498,7 @@ public class Display {
 	}
 
 	public static void main(String[] args) throws IOException {
-		inGame("bg.jpg", "carl_happy.v1.png", "carl", "help", "", "");
+		title();
 	}
+
 }
