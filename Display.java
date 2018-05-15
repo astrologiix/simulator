@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import javax.swing.*;
+import sun.audio.*;
 
 public class Display {
 	static String[] data = { "fileName", "player name", "gender", "0" };
@@ -15,11 +16,16 @@ public class Display {
 	static Font h3 = new Font("courier", Font.PLAIN, 17);
 	// character name font
 	static Font h4 = new Font("courier", Font.PLAIN, 25);
+	// char dialogue font
+	static Font dia = new Font("courier", Font.PLAIN, 20);
 
-	static JFrame jfrm = new JFrame("Game Title");
+	static JFrame jfrm = new JFrame("LuvMi");
 	static ImageIcon icon = new ImageIcon("C:\\Simulator\\icon.png");
-	static ImageIcon title = new ImageIcon("C:\\Simulator\\title.png");
-	
+
+	static AudioPlayer MGP = AudioPlayer.player;
+	static AudioStream BGM;
+	AudioData MD;
+
 	public static void def() {
 		jfrm.setIconImage(icon.getImage());
 		jfrm.setLayout(new BorderLayout());
@@ -28,14 +34,44 @@ public class Display {
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public static void title() throws IOException {
+	@SuppressWarnings("restriction")
+	public static void musicStart(String file) { // Plays the background music
+		ContinuousAudioDataStream loop = null;
+
+		try {
+			InputStream test = new FileInputStream(file);
+			BGM = new AudioStream(test);
+			AudioPlayer.player.start(BGM);
+			// MD = BGM.getData();
+			// loop = new ContinuousAudioDataStream(MD);
+
+		} catch (FileNotFoundException e) {
+			System.out.print(e.toString());
+		} catch (IOException error) {
+			System.out.print(error.toString());
+		}
+		MGP.start(loop);
+	}
+
+	public static void musicStop() {
+		// don't try and do things with a null object!
+		if (BGM != null) {
+			AudioPlayer.player.stop(BGM);
+		}
+		System.out.println("stopping");
+	}
+
+	public static void title() throws IOException, InterruptedException {
+		ImageIcon title = new ImageIcon("C:\\Simulator\\titlegif.gif");
+
+		musicStart("C:\\Simulator\\theme.wav");
+
 		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\bg.jpg"));
 		panel.setLayout(null);
 		panel.setSize(1400, 900);
-		
+
 		JLabel name = new JLabel(title);
-		name.setBounds(820, 70, 500, 390);
-		name.setForeground(Color.BLACK);
+		name.setBounds(800, 25, 588, 495);
 
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW GAME");
@@ -81,6 +117,7 @@ public class Display {
 		def();
 
 		jfrm.setVisible(true);
+
 	}
 
 	// display save game screen
@@ -144,7 +181,7 @@ public class Display {
 				try {
 					clear();
 					title();
-				} catch (IOException e1) {
+				} catch (IOException | InterruptedException e1) {
 					System.out.println("Failed.");
 				}
 			}
@@ -330,11 +367,11 @@ public class Display {
 		JLabel charaname = new JLabel(charname);
 		charaname.setFont(h4);
 		JLabel text1 = new JLabel(line1);
-		text1.setFont(h3);
+		text1.setFont(dia);
 		JLabel text2 = new JLabel(line2);
-		text2.setFont(h3);
+		text2.setFont(dia);
 		JLabel text3 = new JLabel(line3);
-		text3.setFont(h3);
+		text3.setFont(dia);
 
 		pane.add(bg, 0);
 		bg.setBounds(0, 0, 1394, 866);
@@ -345,16 +382,16 @@ public class Display {
 		pane.add(textbg, 2);
 		pane.add(frame, 2);
 		pane.add(charaname, 3);
-		charaname.setBounds(100, 519, 200, 50);
+		charaname.setBounds(100, 513, 200, 50);
 		charaname.setForeground(Color.white);
 		pane.add(text1, 3);
-		text1.setBounds(70, 620, 1300, 20);
+		text1.setBounds(70, 615, 1300, 20);
 		text1.setForeground(Color.white);
 		pane.add(text2, 3);
-		text2.setBounds(70, 650, 1300, 20);
+		text2.setBounds(70, 645, 1300, 20);
 		text2.setForeground(Color.white);
 		pane.add(text3, 3);
-		text3.setBounds(70, 680, 1300, 20);
+		text3.setBounds(70, 675, 1300, 20);
 		text3.setForeground(Color.white);
 		pane.setLayout(null);
 
@@ -381,7 +418,7 @@ public class Display {
 				loadScreen();
 			}
 		});
-		quit = new JButton("QUIT");
+		quit = new JButton("EXIT");
 		quit.setBounds(329, 815, 140, 35);
 		quit.setBackground(Color.WHITE);
 		quit.setFocusable(false);
@@ -389,7 +426,12 @@ public class Display {
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				System.exit(0);
+				try {
+					title();
+				} catch (IOException | InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -492,13 +534,14 @@ public class Display {
 
 	// clear frame contents
 	public static void clear() {
+		musicStop();
 		jfrm.getContentPane().revalidate();
 		jfrm.getContentPane().removeAll();
 		jfrm.getContentPane().repaint();
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		title();
+		//inGame("bg.jpg", "carl_happy.v1.png", "carl", "help", "test", "test");
 	}
-
 }
