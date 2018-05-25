@@ -1,12 +1,16 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import javax.swing.*;
 import sun.audio.*;
 
 public class Display {
 	static String[] data = { "fileName", "player name", "gender", "0" };
+	static boolean cont = false;
 
 	// title font
 	static Font h1 = new Font("courier", Font.PLAIN, 100);
@@ -58,7 +62,7 @@ public class Display {
 		if (BGM != null) {
 			AudioPlayer.player.stop(BGM);
 		}
-		System.out.println("stopping");
+		System.out.println("music stopped");
 	}
 
 	public static void title() throws IOException, InterruptedException {
@@ -66,7 +70,11 @@ public class Display {
 
 		musicStart("C:\\Simulator\\theme.wav");
 
-		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\bg.jpg"));
+		JLayeredPane panel = new JLayeredPane();
+		ImageIcon bg = new ImageIcon("c:\\Simulator\\bg.jpg");
+		JLabel back = new JLabel(bg);
+		back.setSize(1400, 900);
+
 		panel.setLayout(null);
 		panel.setSize(1400, 900);
 
@@ -111,12 +119,142 @@ public class Display {
 		panel.add(loadGame);
 		panel.add(quit);
 		panel.add(name);
+		panel.add(back);
+		panel.moveToBack(back);
 
 		jfrm.getContentPane().add(panel);
 
 		def();
 
 		jfrm.setVisible(true);
+
+	}
+
+	public static void titleCorrupt() throws IOException, InterruptedException {
+		ImageIcon title = new ImageIcon("C:\\Simulator\\titlegif.gif");
+
+		musicStart("C:\\Simulator\\themecorrupt.wav");
+
+		ImageIcon bg = new ImageIcon("C:\\Simulator\\bgcorrupt.gif");
+		JLabel lab = new JLabel(bg);
+		lab.setSize(1400, 900);
+
+		JLayeredPane panel = new JLayeredPane();
+		panel.setLayout(null);
+		panel.setSize(1400, 900);
+
+		JLabel name = new JLabel(title);
+		name.setBounds(800, 25, 588, 495);
+
+		JButton newGame, loadGame, quit;
+		newGame = new JButton("NEW GAME");
+		newGame.setBounds(70, 600, 250, 40);
+		newGame.setBackground(Color.WHITE);
+		newGame.setFocusable(false);
+		newGame.setFont(h3);
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				newGame();
+			}
+		});
+		loadGame = new JButton("LOAD GAME");
+		loadGame.setBounds(70, 660, 250, 40);
+		loadGame.setBackground(Color.WHITE);
+		loadGame.setFocusable(false);
+		loadGame.setFont(h3);
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				loadScreen();
+			}
+		});
+		quit = new JButton("QUIT GAME");
+		quit.setBounds(70, 720, 250, 40);
+		quit.setBackground(Color.WHITE);
+		quit.setFocusable(false);
+		quit.setFont(h3);
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+		panel.add(lab);
+		panel.add(newGame);
+		panel.add(loadGame);
+		panel.add(quit);
+		panel.add(name);
+
+		panel.moveToBack(lab);
+
+		jfrm.getContentPane().add(panel);
+
+		def();
+
+		jfrm.setVisible(true);
+
+	}
+
+	public static void dayTransition(int day) {
+		def();
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.BLACK);
+		panel.setLayout(new BorderLayout());
+
+		JLabel text = new JLabel("Day " + day);
+		text.setFont(h2);
+		text.setForeground(Color.WHITE);
+		text.setHorizontalAlignment(SwingConstants.CENTER);
+
+		panel.add(text);
+
+		jfrm.add(panel);
+
+		jfrm.setVisible(true);
+	}
+
+	public static void blackScreen(String line1, String line2, String line3) {
+
+		def();
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.BLACK);
+		panel.setLayout(new BorderLayout());
+
+		JLabel text = new JLabel("<html>" + line1 + "<br>" + line2 + "<br>" + line3 + "</html>");
+		text.setFont(h3);
+		text.setForeground(Color.white);
+		text.setHorizontalAlignment(SwingConstants.CENTER);
+
+		panel.add(text);
+
+		jfrm.getContentPane().add(panel);
+		jfrm.getContentPane().setBackground(Color.BLACK);
+		jfrm.setVisible(true);
+
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clear();
+				switch (data[3]) {
+				case "0":
+					try {
+						data[3] = "1";
+						inGame("schoolclassroom.jpg", "", "3:01PM",
+								"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
+								"not looking forward to going home. The weatherman didn’t say anything about it",
+								"raining today, yet the sky looks dark and dreary. You don’t have your umbrella. ");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					break;
+				}
+			}
+		});
 
 	}
 
@@ -356,9 +494,9 @@ public class Display {
 
 	public static void inGame(String background, String charimg, String charname, String line1, String line2,
 			String line3) throws IOException {
+
 		JLayeredPane pane = new JLayeredPane();
 		pane.setPreferredSize(new Dimension(1400, 900));
-		// JPanel panel = new JPanel();
 
 		JLabel textbg = new JLabel(new ImageIcon("C:\\Simulator\\textbg.png"));
 		JLabel bg = new JLabel(new ImageIcon("C:\\Simulator\\" + background));
@@ -385,13 +523,13 @@ public class Display {
 		charaname.setBounds(100, 513, 200, 50);
 		charaname.setForeground(Color.white);
 		pane.add(text1, 3);
-		text1.setBounds(70, 615, 1300, 20);
+		text1.setBounds(70, 615, 1300, 30);
 		text1.setForeground(Color.white);
 		pane.add(text2, 3);
-		text2.setBounds(70, 645, 1300, 20);
+		text2.setBounds(70, 645, 1300, 30);
 		text2.setForeground(Color.white);
 		pane.add(text3, 3);
-		text3.setBounds(70, 675, 1300, 20);
+		text3.setBounds(70, 675, 1300, 30);
 		text3.setForeground(Color.white);
 		pane.setLayout(null);
 
@@ -404,7 +542,20 @@ public class Display {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				newGame();
+				switch (Integer.parseInt(data[3])) {
+				case 1:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("schoolcourtyard.jpg", "", "3:01PM",
+								"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
+								"not looking forward to going home. The weatherman didn’t say anything about it",
+								"raining today, yet the sky looks dark and dreary. You don’t have your umbrella. ");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
 			}
 		});
 		loadGame = new JButton("LOAD");
@@ -432,6 +583,14 @@ public class Display {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+		});
+
+		textbg.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clear();
+				cont = true;
 			}
 		});
 
@@ -535,13 +694,15 @@ public class Display {
 	// clear frame contents
 	public static void clear() {
 		musicStop();
+		System.out.println("cleared");
 		jfrm.getContentPane().revalidate();
 		jfrm.getContentPane().removeAll();
 		jfrm.getContentPane().repaint();
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		title();
-		//inGame("bg.jpg", "carl_happy.v1.png", "carl", "help", "test", "test");
+		blackScreen("Welcome to Urashina, a place full of unique opportunities and characters eager to meet you. ",
+				"As a new student at Miyazaki High School, you should take your time to explore this unusual",
+				"town and all that it has to offer. Good luck, and have fun!");
 	}
 }
