@@ -9,7 +9,9 @@ import javax.swing.*;
 import sun.audio.*;
 
 public class Display {
-	static String[] data = { "fileName", "player name", "gender", "0" };
+	// file name[0], player name[1], gender[2], progress[3], long comp[4], yes
+	// comp[5], carl comp[6], m&v comp[7]
+	static String[] data = { "fileName", "player name", "gender", "0", "0", "0", "0", "0" };
 	static boolean cont = false;
 
 	// title font
@@ -600,6 +602,46 @@ public class Display {
 						e1.printStackTrace();
 					}
 					break;
+				case 4:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 2));
+					try {
+						response("schoolclassroom.jpg", "'Thank you!'", "'I'll make sure to return it tomorrow.'");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 5:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("schoolclassroom.jpg", "Ask the quiet boy next to you if he has an umbrella.",
+								"Continue out of the classroom and find an umbrella somewhere else.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 7:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("schoolcafeteria.jpg", "'I'm sorry, is this yours?'",
+								"Shrug and leave to go home with the umbrella.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 9:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("townstreet.jpg", "", "3:10PM",
+								"You begin your walk home, taking in the sights of the quiet town around you. Despite having",
+								"lived here for only two months, it feels like home already and you smile to yourself.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
 				}
 			}
 		});
@@ -641,15 +683,118 @@ public class Display {
 		return button;
 	}
 
-	public static void response(String bg, String res1, String res2) throws IOException {
-		def();
+	public static void response(String background, String res1, String res2) throws IOException {
+		JLayeredPane pane = new JLayeredPane();
+		pane.setPreferredSize(new Dimension(1400, 900));
 
-		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage(bg));
-		panel.setLayout(null);
+		JLabel bg = new JLabel(new ImageIcon("C:\\Simulator\\" + background));
+		JLabel frame = new JLabel(new ImageIcon("C:\\Simulator\\gamebgt.png"));
+		JButton r1 = new JButton(res1);
+		JButton r2 = new JButton(res2);
 
-		JButton r1, r2;
-		r1 = responseButton(res1, 1);
-		r2 = responseButton(res2, 2);
+		pane.add(bg, 0);
+		bg.setBounds(0, 0, 1394, 866);
+		frame.setBounds(0, 0, 1394, 866);
+		pane.add(frame, 1);
+		pane.add(r1, 2);
+		r1.setBounds(150, 350, 1080, 50);
+		r1.setBackground(Color.black);
+		r1.setForeground(Color.WHITE);
+		r1.setFocusable(false);
+		r1.setFont(h3);
+		pane.add(r2, 2);
+		r2.setBounds(150, 450, 1080, 50);
+		r2.setBackground(Color.black);
+		r2.setForeground(Color.WHITE);
+		r2.setFocusable(false);
+		r2.setFont(h3);
+		pane.setLayout(null);
+
+		r1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				switch (Integer.parseInt(data[3])) {
+				case 3:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 1));
+						inGame("schoolclassroom.jpg", "yes_happy.png", "3:02PM",
+								"Wha… Oh! Yeah. Umbrella. Uh, give me a second. Er… uh… got it!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+
+				case 6:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 3));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 1));
+						inGame("schoolcourtyard.jpg", "", "3:04PM",
+								"You exit the building with a smile, holding the boy’s umbrella over your head.", "",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 8:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 1));
+						inGame("schoolcourtyard.jpg", "", "3:04PM",
+								"He shakes his head and exits the room. You smile to yourself and leave with the",
+								"umbrella in hand, stepping out into the rain.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
+		});
+
+		r2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				switch (Integer.parseInt(data[3])) {
+				case 3:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 4));
+					try {
+						inGame("schoolcafeteria.jpg", "longCorrect.png", "3:03PM",
+								"You see a disposable umbrella leaning against the wall and go to take it. Upon",
+								"looking around, you notice someone watching you.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 6:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 3));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 0));
+						inGame("schoolcourtyard.jpg", "", "3:04PM",
+								"You exit the building with a smile, holding the boy’s umbrella over your head.", "",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 8:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 0));
+						inGame("schoolcourtyard.jpg", "", "3:04PM",
+								"You take the umbrella in hand and step out into the rain, ready to go home.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
+		});
 
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW");
@@ -674,7 +819,7 @@ public class Display {
 				loadScreen();
 			}
 		});
-		quit = new JButton("QUIT");
+		quit = new JButton("EXIT");
 		quit.setBounds(329, 815, 140, 35);
 		quit.setBackground(Color.WHITE);
 		quit.setFocusable(false);
@@ -691,53 +836,20 @@ public class Display {
 			}
 		});
 
-		panel.add(newGame);
-		panel.add(loadGame);
-		panel.add(quit);
-		panel.add(r1);
-		panel.add(r2);
-
-		r1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				switch (Integer.parseInt(data[3])) {
-				case 3:
-					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
-					try {
-						inGame("schoolclassroom.jpg", "yes_happy.png", "YES",
-								"Wha… Oh! Yeah. Umbrella. Uh, give me a second. Er… uh… got it!", "", "");
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					break;
-				}
-			}
-		});
-		r2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				switch (Integer.parseInt(data[3])) {
-				case 4:
-					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
-					try {
-						inGame("schoolclassroom.jpg", "yes_happy.png", "YES",
-								"Wha… Oh! Yeah. Umbrella. Uh, give me a second. Er… uh… got it!", "", "");
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					break;
-				}
-			}
-		});
-
-		jfrm.getContentPane().add(panel);
+		pane.add(newGame, 3);
+		pane.add(loadGame, 3);
+		pane.add(quit, 3);
+		pane.moveToFront(newGame);
+		pane.moveToFront(loadGame);
+		pane.moveToFront(quit);
+		pane.moveToBack(bg);
 
 		def();
 
+		jfrm.getContentPane().add(pane);
+
 		jfrm.setVisible(true);
-		jfrm.setSize(1400, 901);
+		jfrm.setSize(1400, 900);
 	}
 
 	// clear frame contents
@@ -750,6 +862,8 @@ public class Display {
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		response("schoolclassroom.jpg", "no", "yes");
+		blackScreen("Welcome to Urashina, a place full of unique opportunities and characters eager to meet you. ",
+				"As a new student at Miyazaki High School, you should take your time to explore this unusual",
+				"town and all that it has to offer. Good luck, and have fun!");
 	}
 }
