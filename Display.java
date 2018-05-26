@@ -542,20 +542,7 @@ public class Display {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				switch (Integer.parseInt(data[3])) {
-				case 1:
-					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
-					try {
-						inGame("schoolcourtyard.jpg", "", "3:01PM",
-								"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
-								"not looking forward to going home. The weatherman didn’t say anything about it",
-								"raining today, yet the sky looks dark and dreary. You don’t have your umbrella. ");
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					break;
-				}
+				newGame();
 			}
 		});
 		loadGame = new JButton("LOAD");
@@ -590,7 +577,30 @@ public class Display {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				clear();
-				cont = true;
+				switch (Integer.parseInt(data[3])) {
+				case 1:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("schoolclassroom.jpg", "", "3:01PM",
+								"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
+								"not looking forward to going home. The weatherman didn’t say anything about it",
+								"raining today, yet the sky looks dark and dreary. You don’t have your umbrella. ");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 2:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("schoolclassroom.jpg", "Ask the quiet boy next to you if he has an umbrella.",
+								"Continue out of the classroom and find an umbrella somewhere else.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
 			}
 		});
 
@@ -631,16 +641,15 @@ public class Display {
 		return button;
 	}
 
-	public static void response() throws IOException {
+	public static void response(String bg, String res1, String res2) throws IOException {
 		def();
 
-		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage("C:\\Simulator\\gamebg.png"));
+		BackgroundImg panel = new BackgroundImg(Toolkit.getDefaultToolkit().getImage(bg));
 		panel.setLayout(null);
 
-		JButton r1, r2, r3;
-		r1 = responseButton("help me", 1);
-		r2 = responseButton("im dying", 2);
-		r3 = responseButton("this is too much", 3);
+		JButton r1, r2;
+		r1 = responseButton(res1, 1);
+		r2 = responseButton(res2, 2);
 
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW");
@@ -673,15 +682,55 @@ public class Display {
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				System.exit(0);
+				try {
+					title();
+				} catch (IOException | InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
+
 		panel.add(newGame);
 		panel.add(loadGame);
 		panel.add(quit);
 		panel.add(r1);
 		panel.add(r2);
-		panel.add(r3);
+
+		r1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				switch (Integer.parseInt(data[3])) {
+				case 3:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("schoolclassroom.jpg", "yes_happy.png", "YES",
+								"Wha… Oh! Yeah. Umbrella. Uh, give me a second. Er… uh… got it!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
+		});
+		r2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				switch (Integer.parseInt(data[3])) {
+				case 4:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("schoolclassroom.jpg", "yes_happy.png", "YES",
+								"Wha… Oh! Yeah. Umbrella. Uh, give me a second. Er… uh… got it!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
+		});
 
 		jfrm.getContentPane().add(panel);
 
@@ -701,8 +750,6 @@ public class Display {
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		blackScreen("Welcome to Urashina, a place full of unique opportunities and characters eager to meet you. ",
-				"As a new student at Miyazaki High School, you should take your time to explore this unusual",
-				"town and all that it has to offer. Good luck, and have fun!");
+		response("schoolclassroom.jpg", "no", "yes");
 	}
 }
