@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -49,6 +48,25 @@ public class FileHandler {
 		Files.createDirectories(Paths.get("C:\\Simulator"));
 	}
 
+
+	public static void direct(String[] data) throws IOException {
+		switch (Integer.parseInt(data[3])) {
+		case 0:
+			Display.blackScreen("Welcome to Urashina, a place full of unique opportunities and characters eager to meet you. ",
+					"As a new student at Miyazaki High School, you should take your time to explore this unusual",
+					"town and all that it has to offer. Good luck, and have fun!");
+			break;
+		case 1:
+			Display.inGame("schoolclassroom.jpg", "", "3:01PM",
+					"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
+					"not looking forward to going home. The weatherman didn’t say anything about it",
+					"raining today, yet the sky looks dark and dreary. You don’t have your umbrella. ");
+			break;
+		case 2:
+
+		}
+	}
+
 	//checks if game should be "corrupt"
 	public static boolean checkCorrupt() {
 		if(Files.exists(Paths.get("C:\\Simulator\\corrupt.txt"))) {
@@ -65,7 +83,4 @@ public class FileHandler {
 		new FileWriter(address);
 	}
 
-	public static void main(String[] args) throws IOException{
-		//method for tests, delete later
-	}
 }
