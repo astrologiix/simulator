@@ -687,7 +687,7 @@ public class Display {
 				case 14:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						inGame("house.png", "", "VITA",
+						inGame("house.png", "mandv_happy.png", "VITA",
 								"Is this where you live?",
 								"", "");
 					} catch (IOException e1) {
@@ -698,13 +698,58 @@ public class Display {
 				case 15:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						inGame("house.png", "", "MORT",
-								"Is this where you live?",
+						inGame("house.png", "mandv_happy.png", "MORT",
+								"We did not know you were our neighbor.",
 								"", "");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					break;
+				case 16:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("house.png", "'Yes, you two are in my history class, right?'",
+								"'Do I know you?'");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 18:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("house.png", "'I'll see you tomorrow then!'",
+								"'Come over to study sometime. It was nice seeing you.'");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 20:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("house.png", "'Sorry, I still don't remember...'",
+								"'Oh, yes! I'll see you in class tomorrow!'");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 22:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "", "3:44PM",
+								"You wave goodbye to Mort and Vita and stretch your arms above your head, yawning. This",
+								"town is certainly full of interesting people. You can't wait to see what tomorrow brings.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 23:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					dayTransition(1);
 					break;
 				}
 			}
@@ -824,6 +869,36 @@ public class Display {
 						e1.printStackTrace();
 					}
 					break;
+				case 17:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 1));
+						inGame("house.png", "mandv_happy.png", "VITA", "It is nice you remember.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 19:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 3));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("house.png", "mandv_happy.png", "MORT", "Yes. Tomorrow.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 21:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("house.png", "mandv_happy.png", "MORT", "Unfortunate...", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
 				}
 			}
 		});
@@ -869,6 +944,36 @@ public class Display {
 					try {
 						data[6] = Integer.toString((Integer.parseInt(data[6]) + 0));
 						inGame("townstreet.jpg", "carl_angry.png", "CARL", "Whatever, I don't need your help!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 17:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 3));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("house.png", "mandv_happy.png", "MORT", "History class.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 19:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 3));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 1));
+						inGame("house.png", "mandv_happy.png", "VITA", "It was nice seeing you as well. :)", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 21:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 1));
+						inGame("house.png", "mandv_happy.png", "VITA", "Yes. Tomorrow. :)", "", "");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
