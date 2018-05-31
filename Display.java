@@ -538,6 +538,19 @@ public class Display {
 		text3.setForeground(Color.white);
 		pane.setLayout(null);
 
+		if (charimg.contains("yes")) {
+            chara.setBounds(0, 0, 800, 1000);
+        }
+        if (charimg.contains("carl")) {
+            chara.setBounds(100, 50, 878, 825);
+        }
+        if (charimg.contains("long")) {
+            chara.setBounds(0, 0, 941, 1063);
+        }
+        if (charimg.contains("mandv")) {
+            chara.setBounds(100, 50, 879, 1113);
+        }
+
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW");
 		newGame.setBounds(9, 815, 140, 35);
