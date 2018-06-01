@@ -11,7 +11,7 @@ import sun.audio.*;
 public class Display {
 	// file name[0], player name[1], gender[2], progress[3], long comp[4], yes
 	// comp[5], carl comp[6], m&v comp[7]
-	static String[] data = { "fileName", "player name", "gender", "0", "0", "0", "0", "0" };
+	static String[] data = { "fileName", "player name", "gender", "0", "0", "0", "0", "0", "none" };
 	static boolean cont = false;
 
 	// title font
@@ -68,67 +68,71 @@ public class Display {
 	}
 
 	public static void title() throws IOException, InterruptedException {
-		ImageIcon title = new ImageIcon("C:\\Simulator\\titlegif.gif");
+		if (FileHandler.checkCorrupt()) {
+			titleCorrupt();
+		} else {
+			ImageIcon title = new ImageIcon("C:\\Simulator\\titlegif.gif");
 
-		musicStart("C:\\Simulator\\theme.wav");
+			musicStart("C:\\Simulator\\theme.wav");
 
-		JLayeredPane panel = new JLayeredPane();
-		ImageIcon bg = new ImageIcon("c:\\Simulator\\bg.jpg");
-		JLabel back = new JLabel(bg);
-		back.setSize(1400, 900);
+			JLayeredPane panel = new JLayeredPane();
+			ImageIcon bg = new ImageIcon("c:\\Simulator\\bg.jpg");
+			JLabel back = new JLabel(bg);
+			back.setSize(1400, 900);
 
-		panel.setLayout(null);
-		panel.setSize(1400, 900);
+			panel.setLayout(null);
+			panel.setSize(1400, 900);
 
-		JLabel name = new JLabel(title);
-		name.setBounds(800, 25, 588, 495);
+			JLabel name = new JLabel(title);
+			name.setBounds(800, 25, 588, 495);
 
-		JButton newGame, loadGame, quit;
-		newGame = new JButton("NEW GAME");
-		newGame.setBounds(70, 600, 250, 40);
-		newGame.setBackground(Color.WHITE);
-		newGame.setFocusable(false);
-		newGame.setFont(h3);
-		newGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				newGame();
-			}
-		});
-		loadGame = new JButton("LOAD GAME");
-		loadGame.setBounds(70, 660, 250, 40);
-		loadGame.setBackground(Color.WHITE);
-		loadGame.setFocusable(false);
-		loadGame.setFont(h3);
-		loadGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				loadScreen();
-			}
-		});
-		quit = new JButton("QUIT GAME");
-		quit.setBounds(70, 720, 250, 40);
-		quit.setBackground(Color.WHITE);
-		quit.setFocusable(false);
-		quit.setFont(h3);
-		quit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+			JButton newGame, loadGame, quit;
+			newGame = new JButton("NEW GAME");
+			newGame.setBounds(70, 600, 250, 40);
+			newGame.setBackground(Color.WHITE);
+			newGame.setFocusable(false);
+			newGame.setFont(h3);
+			newGame.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					clear();
+					newGame();
+				}
+			});
+			loadGame = new JButton("LOAD GAME");
+			loadGame.setBounds(70, 660, 250, 40);
+			loadGame.setBackground(Color.WHITE);
+			loadGame.setFocusable(false);
+			loadGame.setFont(h3);
+			loadGame.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					clear();
+					loadScreen();
+				}
+			});
+			quit = new JButton("QUIT GAME");
+			quit.setBounds(70, 720, 250, 40);
+			quit.setBackground(Color.WHITE);
+			quit.setFocusable(false);
+			quit.setFont(h3);
+			quit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
 
-		panel.add(newGame);
-		panel.add(loadGame);
-		panel.add(quit);
-		panel.add(name);
-		panel.add(back);
-		panel.moveToBack(back);
+			panel.add(newGame);
+			panel.add(loadGame);
+			panel.add(quit);
+			panel.add(name);
+			panel.add(back);
+			panel.moveToBack(back);
 
-		jfrm.getContentPane().add(panel);
+			jfrm.getContentPane().add(panel);
 
-		def();
+			def();
 
-		jfrm.setVisible(true);
+			jfrm.setVisible(true);
+		}
 
 	}
 
@@ -157,7 +161,7 @@ public class Display {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				newGame();
+				Display.blackScreen("we missed y   ou.", "^sg%^kend.&6aHAsganNN", "Come with Us. ^&q");
 			}
 		});
 		loadGame = new JButton("LOAD GAME");
@@ -168,7 +172,7 @@ public class Display {
 		loadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				loadScreen();
+				Display.blackScreen("we missed y   ou.", "^sg%^kend.&6aHAsganNN", "Come with Us. ^&q");
 			}
 		});
 		quit = new JButton("QUIT GAME");
@@ -198,6 +202,42 @@ public class Display {
 
 	}
 
+	public static void routeCheck() {
+		if (Integer.parseInt(data[4]) > Integer.parseInt(data[5])) {
+			if (Integer.parseInt(data[4]) > Integer.parseInt(data[6])) {
+				if (Integer.parseInt(data[4]) > Integer.parseInt(data[7])) {
+					data[8] = "long";
+				}
+			}
+		} else if (Integer.parseInt(data[5]) > Integer.parseInt(data[4])) {
+			if (Integer.parseInt(data[5]) > Integer.parseInt(data[6])) {
+				if (Integer.parseInt(data[5]) > Integer.parseInt(data[7])) {
+					data[8] = "yes";
+				}
+			}
+		} else if (Integer.parseInt(data[6]) > Integer.parseInt(data[4])) {
+			if (Integer.parseInt(data[6]) > Integer.parseInt(data[5])) {
+				if (Integer.parseInt(data[6]) > Integer.parseInt(data[7])) {
+					data[8] = "carl";
+				}
+			}
+		} else if (Integer.parseInt(data[7]) > Integer.parseInt(data[4])) {
+			if (Integer.parseInt(data[7]) > Integer.parseInt(data[5])) {
+				if (Integer.parseInt(data[7]) > Integer.parseInt(data[6])) {
+					data[8] = "mandv";
+				}
+			}
+		}else {
+			data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+			try {
+				Display.inGame("houseinv.png", "mandv_angry.png", "VITA", "What have you done?", "", "");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	public static void dayTransition(int day) {
 		def();
 
@@ -211,6 +251,75 @@ public class Display {
 		text.setHorizontalAlignment(SwingConstants.CENTER);
 
 		panel.add(text);
+
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clear();
+				switch (data[3]) {
+				case "24":
+					try {
+						data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+						inGame("schooloutside.jpg", "", "11:50AM",
+								"School got out early today. You’re very happy to leave and enjoy your lunch somewhere ",
+								"on the town. You’re not sure what you want to eat yet, but you’re very hungry.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					break;
+				case "70":
+					routeCheck();
+					if (data[8].equals("long")) {
+						data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+						try {
+							inGame("house.png", "", "9:00AM",
+									"You’ve just stepped out of the house, ready to go pick up some things to make lunch at the",
+									"market. You never really get mail, but you notice the red flag standing up at the box. As you",
+									"open the mailbox, you pull out a cream colored letter with " + data[1]
+											+ " written on it.");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else if (data[8].equals("yes")) {
+						data[3] = Integer.toString(74);
+						try {
+							inGame("apartment.jpg", "", "9:00AM",
+									"You spend your morning finishing up some homework on your computer and eating a healthy breakfast",
+									"of yogurt and peaches. You notice a notification appear on the bottom of your screen from an ",
+									"unknown user. Curiously, you decide to click on the message.");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else if (data[8].equals("carl")) {
+						data[3] = Integer.toString(77);
+						try {
+							inGame("apartment.jpg", "", "9:00AM",
+									"You wake up to the sound of your phone buzzing. The sky is still dark out, and you can hear crickets",
+									"outside your window. Your clock reads 2:18 AM. You pick up the phone and are greeted with the sound",
+									"of Carl’s voice.");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else if (data[8].equals("mandv")) {
+						data[3] = Integer.toString(80);
+						try {
+							inGame("apartment.jpg", "", "*ph )/%@54",
+									"You wake up at around 7 in the morning. You’ve never been a morning person, but something tells you ",
+									"to get up. You slump out of bed and head to the door of your apartment to grab the newspaper lounging",
+									"outside. As you open the door, you jerk back when faced with Mort and Vita.");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 
 		jfrm.add(panel);
 
@@ -236,6 +345,11 @@ public class Display {
 		jfrm.getContentPane().setBackground(Color.BLACK);
 		jfrm.setVisible(true);
 
+		if (line2.contains("end.")) {
+			panel.setBackground(Color.RED);
+			text.setForeground(Color.BLACK);
+		}
+
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -243,7 +357,7 @@ public class Display {
 				switch (data[3]) {
 				case "0":
 					try {
-						data[3] = "1";
+						data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 						inGame("schoolclassroom.jpg", "", "3:01PM",
 								"You sigh as you gather your stuff from your desk. The bell has just rung, but you’re",
 								"not looking forward to going home. The weatherman didn’t say anything about it",
@@ -253,6 +367,30 @@ public class Display {
 						e1.printStackTrace();
 					}
 
+					break;
+				case "100":
+					try {
+						data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+						inGame("apartment.jpg", "", "*ph )/%@54",
+								"You wake up at around 7 in the morning. You’ve never been a morning person, but something tells you ",
+								"to get up. You slump out of bed and head to the door of your apartment to grab the newspaper lounging",
+								"outside. As you open the door, you jerk back when faced with Mort and Vita.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case "101":
+					try {
+						data[3] = Integer.toString(109);
+						inGame("apartment.jpg", "", "*ph )/%@54",
+								"You wake up at around 7 in the morning. You’ve never been a morning person, but something tells you ",
+								"to get up. You slump out of bed and head to the door of your apartment to grab the newspaper lounging",
+								"outside. As you open the door, you jerk back when faced with Mort and Vita.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					break;
 				}
 			}
@@ -538,18 +676,18 @@ public class Display {
 		text3.setForeground(Color.white);
 		pane.setLayout(null);
 
-		if (charimg.contains("yes")) {
-            chara.setBounds(0, 0, 800, 1000);
-        }
-        if (charimg.contains("carl")) {
-            chara.setBounds(100, 50, 878, 825);
-        }
-        if (charimg.contains("long")) {
-            chara.setBounds(0, 0, 941, 1063);
-        }
-        if (charimg.contains("mandv")) {
-            chara.setBounds(100, 50, 879, 1113);
-        }
+		// if (charimg.contains("yes")) {
+		// chara.setBounds(0, 0, 800, 1000);
+		// }
+		// if (charimg.contains("carl")) {
+		// chara.setBounds(100, 50, 878, 825);
+		// }
+		// if (charimg.contains("long")) {
+		// chara.setBounds(0, 0, 941, 1063);
+		// }
+		// if (charimg.contains("mandv")) {
+		// chara.setBounds(100, 50, 879, 1113);
+		// }
 
 		JButton newGame, loadGame, quit;
 		newGame = new JButton("NEW");
@@ -679,7 +817,8 @@ public class Display {
 				case 11:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						response("townstreet.jpg", "'Of course, go down this road and take a left after the bridge. It’s right there.'",
+						response("townstreet.jpg",
+								"'Of course, go down this road and take a left after the bridge. It’s right there.'",
 								"'Ask someone else, I'm in a rush.'");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -700,9 +839,7 @@ public class Display {
 				case 14:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						inGame("house.png", "mandv_happy.png", "VITA",
-								"Is this where you live?",
-								"", "");
+						inGame("house.png", "mandv_happy.png", "VITA", "Is this where you live?", "", "");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -711,9 +848,8 @@ public class Display {
 				case 15:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						inGame("house.png", "mandv_happy.png", "MORT",
-								"We did not know you were our neighbor.",
-								"", "");
+						inGame("house.png", "mandv_happy.png", "MORT", "We did not know you were our neighbor.", "",
+								"");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -722,8 +858,7 @@ public class Display {
 				case 16:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					try {
-						response("house.png", "'Yes, you two are in my history class, right?'",
-								"'Do I know you?'");
+						response("house.png", "'Yes, you two are in my history class, right?'", "'Do I know you?'");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -754,7 +889,8 @@ public class Display {
 					try {
 						inGame("house.png", "", "3:44PM",
 								"You wave goodbye to Mort and Vita and stretch your arms above your head, yawning. This",
-								"town is certainly full of interesting people. You can't wait to see what tomorrow brings.", "");
+								"town is certainly full of interesting people. You can't wait to see what tomorrow brings.",
+								"");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -763,6 +899,578 @@ public class Display {
 				case 23:
 					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
 					dayTransition(1);
+					break;
+				case 25:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("schooloutside.jpg", "Eat a light meal at a cafe in the heart of town.",
+								"Eat at the new ramen place in the metro station.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 27:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("cafeinside.png", "Approach them and help pay for their meal.",
+								"Ignore them and finish your meal.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 29:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("cafeoutside.png", "long_happy.png", "12:34PM",
+								"You end up sitting with the tall boy, talking about school and enjoying your meals. You chat ",
+								"outside for a moment before you leave.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 30:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("cafeoutside.png", "long_happy.png", "LONG",
+								"Thank you again for your help, you were lovely company.  I’d love to hang out with you another ",
+								"time, my treat!", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 31:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("cafeoutside.png", "Agree with them and exchange numbers.",
+								"Keep it professional and explain you were just being nice.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 33:
+					data[3] = Integer.toString(43);
+					try {
+						inGame("cafeoutside.png", "long_blush.png", "LONG", "I-I’ll see you around then!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 34:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("ramen.jpg", "Ask if they mind having company for lunch.",
+								"Sit towards the back of the small restaurant.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 36:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("ramen.jpg", "yes_sad.png", "12:12PM",
+								"You assure your classmate that there’s nothing to worry about, and that you would love to sit",
+								"with him. As you talk, you notice they are reluctant to meet your glance. ", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 37:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("ramen.jpg", "Ask them if there is something wrong.",
+								"Ignore their behavior and continue talking.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 39:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("ramen.jpg", "yes_blush.png", "12:16PM",
+								"You laugh in reply to your classmate’s cute comment, prompting a slight blush from them. You",
+								"tell them you’re enjoying your time with them and hope to soothe their nerves.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 40:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("ramen.jpg", "yes_blush.png", "YES",
+								"Thank you f-for being so kind! Not many people treat me like that anymore… Would ",
+								"you like to go out to eat again another time?", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 41:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("ramen.jpg", "Tell them you would love to spend more time with them.",
+								"Turn their offer down.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 43:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_happy.png", "1:03PM",
+								"After lunch, you find yourself wandering to the park. There’s a comfy bench with your name on it right",
+								"under a sakura tree. As you approach it, a boxy classmate you recognize sits right in the middle.",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 44:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("park.jpg", "Ask the classmate if they would mind if you sat there.",
+								"Shrug and walk off to the other corner of the park.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 46:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_happy.png", "1:07PM",
+								"The box boy stammers with a mouth full of peanuts, scooching over quickly. He pats the space next",
+								"to him, gesturing for you to sit down. As you sit down next to him, he starts to talk about his day.",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 47:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_happy.png", "CARL",
+								"-And I couldn’t believe what the lady at the counter said to me! I was only trying to be nice…",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 48:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_happy.png", "1:10PM",
+								"You notice that CARL has stray peanuts on his cheek.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 49:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("park.jpg", "Tell him he has peanuts on his cheek",
+								"Wipe the peanuts off his cheek for him.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 51:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_happy.png", "CARL",
+								"Yeah, I’m not even supposed to be eating peanuts, I’m actually pretty allergic to them. But they ",
+								"taste so good!", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 52:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("park.jpg", "Offer him the walnuts in your bag.", "Roll your eyes.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 54:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("park.jpg", "carl_sad.png", "CARL",
+								"Actually... I'm feeling a bit sick now... Can I make this up to you a different time?",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 55:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("park.jpg", "Agree to hang out another time.", "Let him down nicely.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 57:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "MORT", "Hello " + data[1] + ".", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 58:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "VITA", "Nice of you to drop by.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 59:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "MORT", "What brings you here?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 60:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("parkcorner.jpg", "Just stopping by.", "Change your mind and head home.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 62:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "MORT", "Come, take a seat.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 63:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("parkcorner.jpg", "Decline and be on your way.", "Sit with them.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 65:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "MORT", "We have business to attend to.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 66:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("parkcorner.jpg", "Exclaim you don't want them to go.", "Shrug and say goodbye.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 68:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "", "8:15PM",
+								"After a long day out on the town, you finally reach home. It’s only 8pm, but you decide on an early night.",
+								"Something tells you tomorrow is going to be a big day.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 69:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					dayTransition(2);
+					break;
+				case 71:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					event("letter.jpg");
+					break;
+				case 74:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("phone.jpg", "yes_blush.png", "9:01AM",
+								"Hey. It’s Yes. I found you on Twotter and I thought it would be alright to add you. I’ve been thinking",
+								"about some stuff recently and I wanted to talk to you about it. I’ll be blunt because I don’t really know",
+								"know how to say it. Do you want to go out with me?");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 75:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("phone.jpg", "Reply immediately and agree to go out on a date with Yes.",
+								"Leave him on read.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 77:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("apartment.jpg", "carl_blush.png", "CARL",
+								"H-hey. I’m sorry to call you so late I just.. Couldn’t stop thinking about you. I know this is really ",
+								"sudden but would you want to go out on… a real date date sometime?", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 78:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("apartment.jpg", "Agree to go out on a date with Carl.", "Turn him down.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 80:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_happy.png", "MORT", "Hello " + data[1] + ".", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 81:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_blush.png", "VITA", "We are glad you've chosen us.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 82:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_happy.png", "MORT", "You've made the right choice.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 83:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_happy.png", "VITA", "You will not regret this.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 84:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_happy.png", "MORT",
+								"You don't really have a choice anymore, do you?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 85:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "But why would you want another choice?", "",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 86:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("house.png", "mandv_happy.png", "M&V", "You will not be mistreated. Let us in please.",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 87:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("houseinv.png", "Let them in.", "Let them in.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 101:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "Why did you choose them?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 102:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "What did we do wrong?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 103:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "Were we not good enough?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 104:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "We don't want you with them.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 105:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "You can't be with them.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 106:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "M&V", "Please, come with us.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 107:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						response("houseinv.png", "Go with them.", "Go with them.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 109:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "What have you done?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 110:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "Were we not good enough?", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 111:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "You didn't even chose them.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 112:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "You chose nobody.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 113:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "VITA", "We do not settle for 'nobody.'", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 114:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "MORT", "You will be with us.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 115:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("houseinv.png", "mandv_angry.png", "M&V", "We will be with you.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 116:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						Display.response("houseinv.png", "Be with them.", "Be with them.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					break;
 				}
 			}
@@ -803,6 +1511,112 @@ public class Display {
 		button.setFont(h3);
 
 		return button;
+	}
+
+	public static void badEnding() throws IOException {
+		FileHandler.makeCorrupt();
+		FileHandler.save(data[0], data);
+		if (data[3].equals("99")) {
+			data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+			blackScreen("", "proceed?", "");
+		} else if (data[3].equals("100")) {
+			data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+			blackScreen("", "proceed?", "");
+		}
+	}
+
+	public static void event(String background) {
+		JLayeredPane pane = new JLayeredPane();
+		pane.setPreferredSize(new Dimension(1400, 900));
+
+		JLabel bg = new JLabel(new ImageIcon("C:\\Simulator\\" + background));
+		JLabel frame = new JLabel(new ImageIcon("C:\\Simulator\\gamebgt.png"));
+
+		pane.add(bg, 0);
+		bg.setBounds(0, 0, 1394, 866);
+		frame.setBounds(0, 0, 1394, 866);
+		pane.add(frame, 1);
+		pane.setLayout(null);
+
+		bg.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clear();
+				switch (Integer.parseInt(data[3])) {
+				case 72:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						Display.response("house.png", "Respond to Long's letter.",
+								"Ignore the letter and head to the store.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
+		});
+
+		JButton newGame, loadGame, quit;
+		newGame = new JButton("NEW");
+		newGame.setBounds(9, 815, 140, 35);
+		newGame.setBackground(Color.WHITE);
+		newGame.setFocusable(false);
+		newGame.setFont(h3);
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				newGame();
+			}
+		});
+		loadGame = new JButton("LOAD");
+		loadGame.setBounds(169, 815, 140, 35);
+		loadGame.setBackground(Color.WHITE);
+		loadGame.setFocusable(false);
+		loadGame.setFont(h3);
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				loadScreen();
+			}
+		});
+		quit = new JButton("EXIT");
+		quit.setBounds(329, 815, 140, 35);
+		quit.setBackground(Color.WHITE);
+		quit.setFocusable(false);
+		quit.setFont(h3);
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				try {
+					FileHandler.save(data[0], data);
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					title();
+				} catch (IOException | InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		pane.add(newGame, 3);
+		pane.add(loadGame, 3);
+		pane.add(quit, 3);
+		pane.moveToFront(newGame);
+		pane.moveToFront(loadGame);
+		pane.moveToFront(quit);
+		pane.moveToBack(bg);
+
+		def();
+
+		jfrm.getContentPane().add(pane);
+
+		jfrm.setVisible(true);
+		jfrm.setSize(1400, 900);
 	}
 
 	public static void response(String background, String res1, String res2) throws IOException {
@@ -912,6 +1726,188 @@ public class Display {
 						e1.printStackTrace();
 					}
 					break;
+				case 26:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						inGame("cafeinside.png", "long_normal.png", "12:03PM",
+								"You order a small soda and some eggs with rice. In line, you notice one of your classmates in",
+								"line, fumbling with their wallet. You realize they cannot pay for the meal they ordered.",
+								"");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 28:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[4] = Integer.toString((Integer.parseInt(data[4]) + 1));
+						inGame("cafeinside.png", "long_blush.png", "LONG",
+								"Oh, you really didn’t have to… thank you so much!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 32:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[4] = Integer.toString((Integer.parseInt(data[4]) + 3));
+						inGame("cafeoutside.png", "long_blush.png", "12:35PM",
+								"The boy excitedly pulls out his phone to exchange numbers with you. Your hand brushes against his",
+								"when grabbing his phone, and an evident blush is present on his face. ", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 35:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 1));
+						inGame("ramen.jpg", "yes_happy.png", "YES",
+								"That would be nice... Oh... I would have paid for your meal if you were going to deal with my company…",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 38:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 1));
+						inGame("ramen.jpg", "yes_sad.png", "YES",
+								"Oh… can you tell? I’m sorry i’m just.. Really nervous… you’re just really nice to talk to and I don’t",
+								"want to ruin anything… ", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 42:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 3));
+						inGame("ramen.jpg", "yes_happy.png", "YES",
+								"That’s great!! I’ll see you around school then and maybe we can plan something! Bye!",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 45:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 1));
+						inGame("park.jpg", "carl_happy.png", "CARL", "Ohhmh- mmhsorry! Yeah, of course!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 50:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 0));
+						inGame("park.jpg", "carl_happy.png", "CARL",
+								"Oh, do I? Sorry about that! Didn’t mean to make you uncomfortable…", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 53:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 1));
+						inGame("park.jpg", "carl_happy.png", "CARL",
+								"You’re so sweet! Even though I may eat these walnuts now, nothing can stop me from eating",
+								"peanuts in the future!", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 56:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 3));
+						inGame("park.jpg", "carl_happy.png", "CARL", "Great, I'll see you around then!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 61:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("parkcorner.jpg", "mandv_happy.png", "VITA", "There is no need to lie to us.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 64:
+					data[3] = Integer.toString(68);
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("parkcorner.jpg", "mandv_happy.png", "MORT",
+								"That is alright. We will be seeing you again soon.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 67:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 3));
+						inGame("parkcorner.jpg", "mandv_blush.png", "MORT",
+								"Do not worry. We will be seeing you again soon.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 73:
+					data[3] = Integer.toString(99);
+					try {
+						badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 76:
+					data[3] = Integer.toString(99);
+					try {
+						badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 79:
+					data[3] = Integer.toString(99);
+					try {
+						badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 88:
+					blackScreen("", "end.", "");
+					break;
+				case 108:
+					Display.blackScreen("", "end.", "");
+					break;
+				case 117:
+					Display.blackScreen("", "end.", "");
+					break;
 				}
 			}
 		});
@@ -992,6 +1988,189 @@ public class Display {
 						e1.printStackTrace();
 					}
 					break;
+				case 26:
+					data[3] = Integer.toString(34);
+					try {
+						inGame("ramen.jpg", "yes_happy.png", "12:03PM",
+								"You place an order for a bowl of their famous Tonkotsu Ramen and turn around to find a seat. You notice",
+								"one of your classmates sitting alone near the door.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 28:
+					data[3] = Integer.toString(43);
+					try {
+						data[4] = Integer.toString((Integer.parseInt(data[4]) + 0));
+						inGame("cafeinside.png", "", "12:34PM",
+								"You finish your meal in peace, and return your plate to the cafe counter. With a contented sigh, you exit the cafe",
+								"and take in the bustling town." + "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 32:
+					data[3] = Integer.toString(43);
+					try {
+						data[4] = Integer.toString((Integer.parseInt(data[4]) - 1));
+						inGame("cafeoutside.png", "long_sad.png", "LONG",
+								"Oh… I.. understand. Thanks anyways. Have a nice day.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 35:
+					data[3] = Integer.toString(43);
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 0));
+						inGame("ramen.jpg", "", "12:34PM",
+								"The ramen is good and you find yourself finishing your meal much earlier than you’d thought you would.",
+								"After returning the bowl to the bar, you step outside into the town.\r\n" + "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 38:
+					data[3] = Integer.toString(43);
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) + 0));
+						inGame("ramen.jpg", "yes_happy.png", "YES",
+								"You continue your meal with your classmate awkwardly, trying to ignore the eerie silence they bring. After lunch, you",
+								"quietly say your goodbyes and make your way into the city.", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 42:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[5] = Integer.toString((Integer.parseInt(data[5]) - 1));
+						inGame("ramen.jpg", "yes_sad.png", "YES",
+								"Oh.. I understand. I’m sorry for intruding. I probably made you feel really weird. Im sorry. I’ll go now.",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 45:
+					data[3] = Integer.toString(57);
+					try {
+						inGame("parkcorner.jpg", "mandv_happy.png", "1:03PM",
+								"This corner of the park is dark. Trees press up against the gate and hedges prevent any light ",
+								"from getting in. Under the tree, you see two of your history classmates sitting back to back, ",
+								"looking up at the leaves. As you approach, they turn their heads towards you.");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 50:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 1));
+						inGame("park.jpg", "carl_blush.png", "CARL",
+								"O-Oh! Just… peanuts… T-thank you for getting that for me!", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 53:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) + 0));
+						inGame("park.jpg", "carl_sad.png", "CARL",
+								"Oh.. If that’s how you feel, that’s okay. I think i’m going to head home now. Goodbye.",
+								"", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 56:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[6] = Integer.toString((Integer.parseInt(data[6]) - 1));
+						inGame("park.jpg", "carl_sad.png", "CARL",
+								"Oh, thats alright.. I understand. Peanuts aren't for everyone. Cya then.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 61:
+					data[3] = Integer.toString(68);
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("parkcorner.jpg", "mandv_happy.png", "VITA",
+								"How peculiar. Right when we were introduced.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 64:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 3));
+						inGame("parkcorner.jpg", "mandv_happy.png", "VITA", "Thank you for joining us.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 67:
+					data[3] = Integer.toString((Integer.parseInt(data[3]) + 1));
+					try {
+						data[7] = Integer.toString((Integer.parseInt(data[7]) + 0));
+						inGame("parkcorner.jpg", "mandv_happy.png", "VITA", "Farewell.", "", "");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 73:
+					data[3] = Integer.toString(100);
+					try {
+						Display.badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 76:
+					data[3] = Integer.toString(100);
+					try {
+						Display.badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 79:
+					data[3] = Integer.toString(100);
+					try {
+						badEnding();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				case 88:
+					blackScreen("", "end.", "");
+					break;
+				case 108:
+					Display.blackScreen("", "end.", "");
+					break;
+				case 117:
+					Display.blackScreen("", "end.", "");
+					break;
 				}
 			}
 		});
@@ -1069,8 +2248,10 @@ public class Display {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		title();
-		//		blackScreen("Welcome to Urashina, a place full of unique opportunities and characters eager to meet you. ",
-//				"As a new student at Miyazaki High School, you should take your time to explore this unusual",
-//				"town and all that it has to offer. Good luck, and have fun!");
+		// blackScreen("Welcome to Urashina, a place full of unique opportunities and
+		// characters eager to meet you. ",
+		// "As a new student at Miyazaki High School, you should take your time to
+		// explore this unusual",
+		// "town and all that it has to offer. Good luck, and have fun!");
 	}
 }
